@@ -2,6 +2,7 @@ var nilai            = (nilai === undefined) ? {} : nilai;
 nilai.host           = 'http://nilai.plain';
 nilai.paths          = {
     'add'    : '/mark/add',
+    'labels' : '/labels/normal'
     'search' : '/marks/search'
 };
 nilai.special_chars  = {'\\+': '&#43;'};
