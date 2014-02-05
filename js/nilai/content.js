@@ -32,6 +32,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback)
     {
         var elem = document.getElementById('nilai-message');
         document.body.removeChild(elem);
-
     }, 2500);
 });

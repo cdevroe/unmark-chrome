@@ -34,6 +34,16 @@ nilai.context.pushMessage = function(type, msg)
     type = (type == 'error') ? 'Error' : 'Success';
     msg  = type + ': ' + msg;
     chrome.tabs.sendMessage(nilai.current_tab.id, {'message': msg, 'screen_width': nilai.current_tab.width, 'screen_height': nilai.current_tab.height, 'type': type.toLowerCase()}, function() {});
+
+    var color = (type == 'Error') ? '#ff0000' : '#000000';
+    var text  = (type == 'Error') ? 'ERR' : 'OK';
+    chrome.browserAction.setBadgeBackgroundColor({'color': color});
+    chrome.browserAction.setBadgeText({'text': text});
+
+    var timer = setTimeout(function()
+    {
+        chrome.browserAction.setBadgeText({'text': ''});
+    }, 2500);
 };
 
 
