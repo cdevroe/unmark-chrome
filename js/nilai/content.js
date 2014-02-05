@@ -19,8 +19,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback)
     nilai_div.id        = 'nilai-message';
     nilai_div.innerHTML = request.message;
 
+    var color = (request.type == 'error') ? 'F2BBB8' : '73D9B7';
+
     // Set style attributes
-    nilai_div.setAttribute('style', 'position:absolute;left:' + l + 'px;top:' + t + 'px;z-index:1;text-align:center;background-color:#73D9B7;color:#000;width:' + w + 'px;height:' + h + 'px;line-height:' + h + 'px;font-size:16px;font-family: Helvetica;');
+    nilai_div.setAttribute('style', 'position:absolute;left:' + l + 'px;top:' + t + 'px;z-index:1;text-align:center;background-color:#' + color + ';color:#000;width:' + w + 'px;height:' + h + 'px;line-height:' + h + 'px;font-size:16px;font-family: Helvetica;');
 
     // Add to DOM
     document.body.appendChild(nilai_div);

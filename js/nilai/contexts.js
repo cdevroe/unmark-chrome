@@ -26,14 +26,14 @@ nilai.context.fail = function(obj)
     var status = obj.status || -1;
     var err    = (status == '500' || status == '404' || obj.err === undefined) ? 'We could not save this page.' : (status == '403') ? 'Please log into your account first and then try again.' : obj.err;
     status     = (status > 0) ? ' (' + status + ')' : '';
-    this.pushMessage('error', err + status);
+    nilai.context.pushMessage('error', err + status);
 };
 
 nilai.context.pushMessage = function(type, msg)
 {
     type = (type == 'error') ? 'Error' : 'Success';
-    msg  = type + ': ' + message;
-    chrome.tabs.sendMessage(nilai.current_tab.id, {'message': msg, 'screen_width': nilai.current_tab.width, 'screen_height': nilai.current_tab.height}, function() {});
+    msg  = type + ': ' + msg;
+    chrome.tabs.sendMessage(nilai.current_tab.id, {'message': msg, 'screen_width': nilai.current_tab.width, 'screen_height': nilai.current_tab.height, 'type': type.toLowerCase()}, function() {});
 };
 
 
@@ -42,15 +42,15 @@ nilai.context.success = function(res)
     //console.log(res);
     if (res.errors) {
         for (var i in res.errors) {
-            this.pushMessage('error', {'err': res.errors[i], 'status': i});
+            nilai.context.pushMessage('error', {'err': res.errors[i], 'status': i});
             break;
         }
     }
     else if (res.mark) {
-        this.pushMessage('success', 'This page has been saved to Nilai.');
+        nilai.context.pushMessage('success', 'This page has been saved to Nilai.');
     }
     else {
-        this.pushMessage('error', {});
+        nilai.context.pushMessage('error', {});
     }
 };
 
