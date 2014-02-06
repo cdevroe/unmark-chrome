@@ -7,7 +7,7 @@ nilai.ext.tab_url   = null;
 
 nilai.ext.addCallback = function(obj)
 {
-    nilai.ext.log(obj);
+    //nilai.ext.log(obj);
     if (obj.mark) {
         nilai.ext.showMessage('success', 'You have successfully add this page as a mark.');
         $('#edit-options').fadeIn('fast');
@@ -24,7 +24,6 @@ nilai.ext.addCallback = function(obj)
 nilai.ext.addMark = function()
 {
     var query = 'label_id=' + nilai.urlEncode($('#label_id').val()) + '&notes=' + nilai.urlEncode($('#notes').val()) + '&url=' + nilai.urlEncode(nilai.ext.tab_url) + '&title=' + nilai.urlEncode(nilai.ext.tab_title);
-    nilai.ext.log(query);
     nilai.ajax(nilai.paths.add, query, 'POST', nilai.ext.addCallback, nilai.ext.updateError);
 };
 
@@ -79,7 +78,7 @@ nilai.ext.deleteMark = function()
 
 nilai.ext.editCallback = function(obj)
 {
-    nilai.ext.log(obj);
+    //nilai.ext.log(obj);
     if (obj.mark) {
         nilai.ext.showMessage('success', 'The mark was successfully updated.');
     }
@@ -114,7 +113,7 @@ nilai.ext.init = function(obj)
 
 nilai.ext.loadOptions = function(obj)
 {
-    nilai.ext.log(obj);
+    //nilai.ext.log(obj);
     // Set the defaults
     var action   = (obj.mark) ? 'edit' : 'add';
     var notes    = (obj.mark) ? obj.mark.notes : '';
@@ -165,7 +164,7 @@ nilai.ext.log = function(what)
 
 nilai.ext.restoreCallback = function(obj)
 {
-    nilai.ext.log(obj);
+    //nilai.ext.log(obj);
     if (obj.mark) {
         $('#archived').slideUp('fast', function()
         {
@@ -194,7 +193,7 @@ nilai.ext.setLabels = function(obj)
         localStorage.setItem('nilai_labels', JSON.stringify(obj));
     }
 
-    nilai.ext.log(obj);
+    //nilai.ext.log(obj);
 };
 
 nilai.ext.showMessage = function(type, msg)
