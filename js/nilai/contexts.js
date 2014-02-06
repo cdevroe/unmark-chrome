@@ -1,6 +1,11 @@
 nilai.context     = {};
 nilai.current_tab = {};
 
+nilai.context.check = function()
+{
+    nilai.ajax(nilai.paths.check, 'url=' + nilai.urlEncode(nilai.current_tab.url), 'GET', nilai.context.save, nilai.context.save);
+};
+
 // Handle the clicky clicks
 nilai.context.chelseaHandler = function(info, tab)
 {
@@ -10,7 +15,7 @@ nilai.context.chelseaHandler = function(info, tab)
     // No easy way to get the link's page title
     if (tab && is_page === true) {
         nilai.current_tab = tab;
-        nilai.ajax(nilai.paths.ping, '', 'GET', nilai.context.save, nilai.context.fail);
+        nilai.ajax(nilai.paths.ping, '', 'GET', nilai.context.check, nilai.context.fail);
         //console.log("item " + info.menuItemId + " was clicked");
         //console.log("info: " + JSON.stringify(info));
         //console.log("tab: " + JSON.stringify(tab));
@@ -28,7 +33,7 @@ nilai.context.fail = function(obj)
 
 nilai.context.pushMessage = function(type, msg)
 {
-    type = (type == 'error') ? 'Error' : 'Success';
+    type = (type == 'error') ? 'Error' : (type == 'success') ? 'Success' : 'Notice';
     msg  = type + ': ' + msg;
     chrome.tabs.sendMessage(nilai.current_tab.id, {'message': msg, 'screen_width': nilai.current_tab.width, 'screen_height': nilai.current_tab.height, 'type': type.toLowerCase()}, function() {});
 
@@ -45,10 +50,15 @@ nilai.context.pushMessage = function(type, msg)
 
 nilai.context.save = function(obj)
 {
-    var url   = nilai.current_tab.url;
-    var title = nilai.current_tab.title;
-    var query = 'url=' + nilai.urlEncode(url) + '&title=' + nilai.urlEncode(title) + '&notes=' + nilai.urlEncode('#chrome');
-    nilai.ajax(nilai.paths.add, query, 'POST', nilai.context.success, nilai.context.fail);
+    if (obj.mark) {
+        nilai.context.pushMessage('notice', 'This page already exists in your account.');
+    }
+    else {
+        var url   = nilai.current_tab.url;
+        var title = nilai.current_tab.title;
+        var query = 'url=' + nilai.urlEncode(url) + '&title=' + nilai.urlEncode(title) + '&notes=' + nilai.urlEncode('#chrome');
+        nilai.ajax(nilai.paths.add, query, 'POST', nilai.context.success, nilai.context.fail);
+    }
 };
 
 nilai.context.success = function(obj)

@@ -9,25 +9,40 @@
 <body>
     <div id="container">
         <div id="options">
-            <p>URL: <span id="nilai_url"></span></p>
-            <p>Title: <span id="nilai_title"></span></p>
+            <h1>Add Mark</h1>
+            <p><a href="http://nilai.plain/user/settings">Settings</a></p>
+            <p>URL: <span id="text-url"></span></p>
+            <p>Title: <span id="text-title"></span></p>
             <p>
                 <label for="notes">Label:</label>
-                <select id="nilai_label_id" name="nilai_label_id"></select>
+                <select id="label_id"></select>
             </p>
             <p>
                 <label for="notes">Notes:</label>
-                <textarea id="nilia_notes" name="nilia_notes" style="width: 100%; height: 100px;"></textarea>
+                <textarea id="notes"></textarea>
             </p>
             <p>
-                <input type="button" name="nilai_submit" id="nilai_submit" value="Add Mark">
+                <input type="button" id="submit" value="Add Mark">
             </p>
+            <p id="edit-options">
+                <a href="#" data-method="archiveMark">Archive</a>
+            </p>
+            <input type="hidden" id="mark_id" value="">
+            <input type="hidden" id="action" value="">
+            <input type="hidden" id="url" value="">
+            <input type="hidden" id="title" value="">
         </div>
         <div id="login">
             <p>Please log into your account <a href="http://nilai.plain">here</a>.</p>
         </div>
         <div id="error">
             <p>An unexpected error occured. Please try to close the plugin and open it again.</p>
+        </div>
+        <div id="invalid">
+            <p>The page you are trying to save has an invalid protocol. The page must use `http` or `https`.</p>
+        </div>
+        <div id="archived">
+            <p>This mark was already archived. You can <a href="#" data-method="restoreMark">restore it here</a> if you'd like.</p>
         </div>
     </div>
 </body>

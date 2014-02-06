@@ -1,7 +1,42 @@
+html, body {
+    background: #FFF;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    -webkit-user-select: none;
+    font-size: 14px;
+    font-family: Helvetica;
+}
+
 #container {
     width: 500px;
 }
 
-#options, #login, #error {
+#options, #login, #error, #invalid, #edit-options, #archived {
     display: none;
+}
+
+#error, #invalid {
+    background-color: #F59090;
+    border: 2px solid #BA5B5B;
+    padding: 5px;
+}
+
+#login {
+    background-color: #6EF5DE;
+    border: 2px solid #5BBDAC;
+    padding: 5px;
+}
+
+textarea {
+    width: 85%;
+    padding: 5px;
+    height: 100px;
+    font-size: 14px;
+    font-family: Helvetica;
+}
+
+select {
+    font-size: 14px;
+    font-family: Helvetica;
 }

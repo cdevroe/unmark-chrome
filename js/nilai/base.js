@@ -1,10 +1,14 @@
 var nilai            = (nilai === undefined) ? {} : nilai;
 nilai.host           = 'http://nilai.plain';
 nilai.paths          = {
-    'add'    : '/mark/add',
-    'labels' : '/labels/normal',
-    'ping'   : '/chrome/ping',
-    'search' : '/marks/search'
+    'add'     : '/mark/add',
+    'archive' : '/mark/archive',
+    'check'   : '/mark/check',
+    'edit'    : '/mark/edit',
+    'labels'  : '/labels/normal',
+    'ping'    : '/chrome/ping',
+    'restore' : '/mark/restore',
+    'search'  : '/marks/search'
 };
 nilai.special_chars  = {'\\+': '&#43;'};
 
@@ -19,10 +23,13 @@ nilai.ajax = function(path, query, method, success_callback, error_callback)
         type: method,
         headers: {'X-Requested-With': 'XMLHttpRequest', 'X-Chrome-Extension': 'Nilai'},
         timeout: 2000,
-        success: function(res)
+        success: function(obj)
         {
+            //nilai.ext.log('success');
+            //nilai.ext.log(obj);
+            //nilai.ext.log($.isFunction(success_callback));
             if ($.isFunction(success_callback)) {
-                success_callback(res);
+                success_callback(obj);
             }
         },
         error: function(xhr, status, err)
@@ -35,6 +42,10 @@ nilai.ajax = function(path, query, method, success_callback, error_callback)
                     obj.error  = xhr.responseJSON.errors[i];
                 }
             }
+
+            //nilai.ext.log('fail');
+            //nilai.ext.log(obj);
+            //nilai.ext.log($.isFunction(error_callback));
 
             if ($.isFunction(error_callback)) {
                 error_callback(obj);

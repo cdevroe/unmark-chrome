@@ -12,6 +12,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback)
     t                   = (t < 0) ? 0 : t;
     t                   = t + parseInt(document.body.scrollTop, 10);
 
+    console.log(request);
+
     // Create new div
     // Set ID
     // Set innerHTML
@@ -19,7 +21,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback)
     nilai_div.id        = 'nilai-message';
     nilai_div.innerHTML = request.message;
 
-    var color = (request.type == 'error') ? 'F2BBB8' : '73D9B7';
+    var color = (request.type == 'error') ? 'F2BBB8' : (request.type == 'success') ? '73D9B7' : 'F0F593';
 
     // Set style attributes
     nilai_div.setAttribute('style', 'position:absolute;left:' + l + 'px;top:' + t + 'px;z-index:1;text-align:center;background-color:#' + color + ';color:#000;width:' + w + 'px;height:' + h + 'px;line-height:' + h + 'px;font-size:16px;font-family: Helvetica;');
