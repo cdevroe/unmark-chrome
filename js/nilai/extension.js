@@ -9,7 +9,7 @@ nilai.ext.addCallback = function(obj)
 {
     //nilai.ext.log(obj);
     if (obj.mark) {
-        nilai.ext.showMessage('success', 'You have successfully add this page as a mark.');
+        nilai.ext.showMessage('success', 'You have successfully added this page as a mark.');
         $('#edit-options').fadeIn('fast');
         nilai.ext.label_id = obj.mark.label_id;
         nilai.ext.mark_id  = obj.mark.mark_id;
