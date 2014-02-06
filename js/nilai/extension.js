@@ -31,9 +31,9 @@ nilai.ext.archiveCallback = function(obj)
 {
     //nilai.ext.log(obj);
     if (obj.mark) {
-        $('#options').slideUp('fast', function()
+        $('#options').fadeOut('fast', function()
         {
-            $('#archived').slideDown('fast');
+            $('#archived').fadeIn('fast');
         });
     }
     else {
@@ -61,9 +61,9 @@ nilai.ext.deleteCallback = function(obj)
 {
     //nilai.ext.log(obj);
     if (obj.mark) {
-        $('#options').slideUp('fast', function()
+        $('#options').fadeOut('fast', function()
         {
-            $('#deleted').slideDown('fast');
+            $('#deleted').fadeIn('fast');
         });
     }
     else {
@@ -166,10 +166,10 @@ nilai.ext.restoreCallback = function(obj)
 {
     //nilai.ext.log(obj);
     if (obj.mark) {
-        $('#archived').slideUp('fast', function()
+        $('#archived').fadeOut('fast', function()
         {
             $('#edit-options').show();
-            $('#options').slideDown('fast');
+            $('#options').fadeIn('fast');
         });
     }
     else {
