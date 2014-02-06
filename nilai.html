@@ -8,7 +8,9 @@
 </head>
 <body>
     <div id="container">
+        <div id="message"></div>
         <div id="options">
+
             <h1>Add Mark</h1>
             <p><a href="http://nilai.plain/user/settings">Settings</a></p>
             <p>URL: <span id="text-url"></span></p>
@@ -25,7 +27,8 @@
                 <input type="button" id="submit" value="Add Mark">
             </p>
             <p id="edit-options">
-                <a href="#" data-method="archiveMark">Archive</a>
+                <a href="#" data-method="archiveMark">Archive</a> |
+                <a href="#" data-method="deleteMark">Delete</a>
             </p>
             <input type="hidden" id="mark_id" value="">
             <input type="hidden" id="action" value="">
@@ -42,7 +45,10 @@
             <p>The page you are trying to save has an invalid protocol. The page must use `http` or `https`.</p>
         </div>
         <div id="archived">
-            <p>This mark was already archived. You can <a href="#" data-method="restoreMark">restore it here</a> if you'd like.</p>
+            <p>This mark is archived. You can <a href="#" data-method="restoreMark">restore it here</a> if you'd like.</p>
+        </div>
+         <div id="deleted">
+            <p>This mark has been deleted.</p>
         </div>
     </div>
 </body>

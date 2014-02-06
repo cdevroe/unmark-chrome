@@ -12,7 +12,7 @@ html, body {
     width: 500px;
 }
 
-#options, #login, #error, #invalid, #edit-options, #archived {
+#options, #login, #error, #invalid, #edit-options, #archived, #deleted, #message {
     display: none;
 }
 
@@ -39,4 +39,9 @@ textarea {
 select {
     font-size: 14px;
     font-family: Helvetica;
+}
+
+#message {
+    padding: 5px;
+    font-weight: bold;
 }

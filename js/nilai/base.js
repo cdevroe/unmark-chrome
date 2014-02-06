@@ -4,6 +4,7 @@ nilai.paths          = {
     'add'     : '/mark/add',
     'archive' : '/mark/archive',
     'check'   : '/mark/check',
+    'delete'  : '/mark/delete',
     'edit'    : '/mark/edit',
     'labels'  : '/labels/normal',
     'ping'    : '/chrome/ping',

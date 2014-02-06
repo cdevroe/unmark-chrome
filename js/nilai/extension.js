@@ -1,19 +1,50 @@
 var nilai           = (nilai === undefined) ? {} : nilai;
 nilai.ext           = {};
-nilai.ext.action    = 'add';
 nilai.ext.label_id  = 0;
 nilai.ext.mark_id   = 0;
 nilai.ext.tab_title = null;
 nilai.ext.tab_url   = null;
 
+nilai.ext.addCallback = function(obj)
+{
+    nilai.ext.log(obj);
+    if (obj.mark) {
+        nilai.ext.showMessage('success', 'You have successfully add this page as a mark.');
+        $('#edit-options').fadeIn('fast');
+        nilai.ext.label_id = obj.mark.label_id;
+        nilai.ext.mark_id  = obj.mark.mark_id;
+        $('#submit').val('Edit Mark');
+        $('h1').html('Edit Mark');
+    }
+    else {
+        nilai.ext.updateError();
+    }
+};
+
 nilai.ext.addMark = function()
 {
-    nilai.ext.log('Add Mark');
+    var query = 'label_id=' + nilai.urlEncode($('#label_id').val()) + '&notes=' + nilai.urlEncode($('#notes').val()) + '&url=' + nilai.urlEncode(nilai.ext.tab_url) + '&title=' + nilai.urlEncode(nilai.ext.tab_title);
+    nilai.ext.log(query);
+    nilai.ajax(nilai.paths.add, query, 'POST', nilai.ext.addCallback, nilai.ext.updateError);
+};
+
+nilai.ext.archiveCallback = function(obj)
+{
+    //nilai.ext.log(obj);
+    if (obj.mark) {
+        $('#options').slideUp('fast', function()
+        {
+            $('#archived').slideDown('fast');
+        });
+    }
+    else {
+        nilai.ext.updateError();
+    }
 };
 
 nilai.ext.archiveMark = function()
 {
-    nilai.ext.log('Archive Mark');
+    nilai.ajax(nilai.paths.archive + '/' + nilai.ext.mark_id, '', 'POST', nilai.ext.archiveCallback, nilai.ext.updateError);
 };
 
 nilai.ext.auth = function(obj)
@@ -27,9 +58,40 @@ nilai.ext.auth = function(obj)
     }
 };
 
+nilai.ext.deleteCallback = function(obj)
+{
+    //nilai.ext.log(obj);
+    if (obj.mark) {
+        $('#options').slideUp('fast', function()
+        {
+            $('#deleted').slideDown('fast');
+        });
+    }
+    else {
+        nilai.ext.updateError();
+    }
+};
+
+nilai.ext.deleteMark = function()
+{
+    nilai.ajax(nilai.paths.delete + '/' + nilai.ext.mark_id, '', 'POST', nilai.ext.deleteCallback, nilai.ext.updateError);
+};
+
+nilai.ext.editCallback = function(obj)
+{
+    nilai.ext.log(obj);
+    if (obj.mark) {
+        nilai.ext.showMessage('success', 'The mark was successfully updated.');
+    }
+    else {
+        nilai.ext.updateError();
+    }
+};
+
 nilai.ext.editMark = function()
 {
-    nilai.ext.log('Edit Mark');
+    var query = 'label_id=' + nilai.urlEncode($('#label_id').val()) + '&notes=' + nilai.urlEncode($('#notes').val());
+    nilai.ajax(nilai.paths.edit + '/' + nilai.ext.mark_id, query, 'POST', nilai.ext.editCallback, nilai.ext.updateError);
 };
 
 nilai.ext.init = function(obj)
@@ -41,6 +103,9 @@ nilai.ext.init = function(obj)
             $('#invalid').fadeIn('fast');
         }
         else {
+            nilai.ext.tab_url   = tab.url;
+            nilai.ext.tab_title = tab.title;
+
             // Check if url was added already
             nilai.ajax(nilai.paths.check, 'url=' + nilai.urlEncode(tab.url), 'GET', nilai.ext.loadOptions, nilai.ext.loadOptions);
         }
@@ -51,6 +116,7 @@ nilai.ext.loadOptions = function(obj)
 {
     nilai.ext.log(obj);
     // Set the defaults
+    var action   = (obj.mark) ? 'edit' : 'add';
     var notes    = (obj.mark) ? obj.mark.notes : '';
     var button   = (obj.mark) ? 'Edit Mark' : 'Add Mark';
     var archived = (obj.mark) ? obj.mark.archived_on : '';
@@ -60,9 +126,6 @@ nilai.ext.loadOptions = function(obj)
 
     // Set mark id
     nilai.ext.mark_id = (obj.mark) ? obj.mark.mark_id : '';
-
-    // Set action
-    nilai.ext.action  = (obj.mark) ? 'edit' : 'add';
 
     // Set url and title
     nilai.ext.tab_url   = (obj.mark) ? obj.mark.url : nilai.ext.tab_url;
@@ -75,7 +138,7 @@ nilai.ext.loadOptions = function(obj)
     // Set some defaults
     $('#text-url').html(nilai.ext.tab_url);
     $('#text-title').html(nilai.ext.tab_title);
-    $('#notes').text(notes);
+    $('#notes').html(notes);
     $('#submit').val(button);
     $('h1').html(button);
 
@@ -86,7 +149,7 @@ nilai.ext.loadOptions = function(obj)
     }
     else {
         // Enabled edit only options
-        if (nilai.ext.action == 'edit') {
+        if (action == 'edit') {
             $('#edit-options').show();
         }
 
@@ -104,24 +167,20 @@ nilai.ext.restoreCallback = function(obj)
 {
     nilai.ext.log(obj);
     if (obj.mark) {
-        if (nilai.empty(obj.mark.archived_on)) {
-            $('#archived').slideUp('fast', function()
-            {
-                if (nilai.ext.action == 'edit') {
-                    $('#edit-options').show();
-                    $('#options').slideDown('fast');
-                }
-            });
-        }
-        else {
-            nilai.ext.log('could not restore mark');
-        }
+        $('#archived').slideUp('fast', function()
+        {
+            $('#edit-options').show();
+            $('#options').slideDown('fast');
+        });
+    }
+    else {
+        nilai.ext.updateError();
     }
 };
 
 nilai.ext.restoreMark = function()
 {
-    nilai.ajax(nilai.paths.restore + '/' + nilai.ext.mark_id, '', 'POST', nilai.ext.restoreCallback, nilai.ext.restoreCallback);
+    nilai.ajax(nilai.paths.restore + '/' + nilai.ext.mark_id, '', 'POST', nilai.ext.restoreCallback, nilai.ext.updateError);
 };
 
 nilai.ext.setLabels = function(obj)
@@ -136,6 +195,23 @@ nilai.ext.setLabels = function(obj)
     }
 
     nilai.ext.log(obj);
+};
+
+nilai.ext.showMessage = function(type, msg)
+{
+    var color = (type == 'error') ? 'F2BBB8' : (type == 'success') ? '73D9B7' : 'F0F593';
+    $('#message').css('background-color', '#' + color).html(msg).fadeIn('fast', function()
+    {
+        var timer = setTimeout(function()
+        {
+            $('#message').fadeOut('fast');
+        }, 3500);
+    });
+};
+
+nilai.ext.updateError = function()
+{
+    nilai.ext.showMessage('error', 'There was an issue completing the requested action. Please try again.');
 };
 
 // Check the user is logged in
