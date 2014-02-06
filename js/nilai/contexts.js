@@ -91,7 +91,7 @@ chrome.contextMenus.create(
 
 chrome.contextMenus.create(
 {
-    'title'               : 'Save page to Nilai',
+    'title'               : 'Quick save to Nilai',
     'documentUrlPatterns' : ['http://*/*', 'https://*/*'],
     'contexts'            : ['page'],
     'onclick'             : nilai.context.chelseaHandler
