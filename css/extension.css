@@ -1,0 +1,7 @@
+#container {
+    width: 500px;
+}
+
+#options, #login, #error {
+    display: none;
+}

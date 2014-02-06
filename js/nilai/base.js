@@ -2,7 +2,8 @@ var nilai            = (nilai === undefined) ? {} : nilai;
 nilai.host           = 'http://nilai.plain';
 nilai.paths          = {
     'add'    : '/mark/add',
-    'labels' : '/labels/normal'
+    'labels' : '/labels/normal',
+    'ping'   : '/chrome/ping',
     'search' : '/marks/search'
 };
 nilai.special_chars  = {'\\+': '&#43;'};
@@ -27,6 +28,14 @@ nilai.ajax = function(path, query, method, success_callback, error_callback)
         error: function(xhr, status, err)
         {
             var obj = {'xhr': xhr, 'status': status, 'error': err};
+
+            if (xhr.responseJSON.errors) {
+                for (var i in xhr.responseJSON.errors) {
+                    obj.status = i;
+                    obj.error  = xhr.responseJSON.errors[i];
+                }
+            }
+
             if ($.isFunction(error_callback)) {
                 error_callback(obj);
             }

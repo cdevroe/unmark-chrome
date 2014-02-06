@@ -8,16 +8,27 @@
 </head>
 <body>
     <div id="container">
-        <p>URL: <span id="nilai-url"></span></p>
-        <p>Title: <span id="nilai-title"></span></p>
-        <p>
-            <label for="notes">Label:</label>
-            <select id="nilai-label_id" name="nilai-label_id"></select>
-        </p>
-        <p>
-            <label for="notes">Notes:</label>
-            <textarea id="nilia-notes" name="nilia-notes" style="width: 100%; height: 150px;"></textarea>
-        </p>
+        <div id="options">
+            <p>URL: <span id="nilai_url"></span></p>
+            <p>Title: <span id="nilai_title"></span></p>
+            <p>
+                <label for="notes">Label:</label>
+                <select id="nilai_label_id" name="nilai_label_id"></select>
+            </p>
+            <p>
+                <label for="notes">Notes:</label>
+                <textarea id="nilia_notes" name="nilia_notes" style="width: 100%; height: 100px;"></textarea>
+            </p>
+            <p>
+                <input type="button" name="nilai_submit" id="nilai_submit" value="Add Mark">
+            </p>
+        </div>
+        <div id="login">
+            <p>Please log into your account <a href="http://nilai.plain">here</a>.</p>
+        </div>
+        <div id="error">
+            <p>An unexpected error occured. Please try to close the plugin and open it again.</p>
+        </div>
     </div>
 </body>
 </html>

@@ -10,10 +10,7 @@ nilai.context.chelseaHandler = function(info, tab)
     // No easy way to get the link's page title
     if (tab && is_page === true) {
         nilai.current_tab = tab;
-        var url   = tab.url;
-        var title = tab.title;
-        var query = 'url=' + nilai.urlEncode(url) + '&title=' + nilai.urlEncode(title) + '&notes=' + nilai.urlEncode('#chrome');
-        nilai.ajax(nilai.paths.add, query, 'POST', nilai.context.success, nilai.context.fail);
+        nilai.ajax(nilai.paths.ping, '', 'GET', nilai.context.save, nilai.context.fail);
         //console.log("item " + info.menuItemId + " was clicked");
         //console.log("info: " + JSON.stringify(info));
         //console.log("tab: " + JSON.stringify(tab));
@@ -24,8 +21,8 @@ nilai.context.chelseaHandler = function(info, tab)
 nilai.context.fail = function(obj)
 {
     var status = obj.status || -1;
-    var err    = (status == '500' || status == '404' || obj.err === undefined) ? 'We could not save this page.' : (status == '403') ? 'Please log into your account first and then try again.' : obj.err;
-    status     = (status > 0) ? ' (' + status + ')' : '';
+    var err    = (status == '500' || status == '404' || obj.error === undefined) ? 'We could not save this page.' : (status == '403') ? 'Please log into your account first and then try again.' : obj.err;
+    status     = (status > 0 && status != '403') ? ' (' + status + ')' : '';
     nilai.context.pushMessage('error', err + status);
 };
 
@@ -46,17 +43,24 @@ nilai.context.pushMessage = function(type, msg)
     }, 2500);
 };
 
-
-nilai.context.success = function(res)
+nilai.context.save = function(obj)
 {
-    //console.log(res);
-    if (res.errors) {
-        for (var i in res.errors) {
-            nilai.context.pushMessage('error', {'err': res.errors[i], 'status': i});
+    var url   = nilai.current_tab.url;
+    var title = nilai.current_tab.title;
+    var query = 'url=' + nilai.urlEncode(url) + '&title=' + nilai.urlEncode(title) + '&notes=' + nilai.urlEncode('#chrome');
+    nilai.ajax(nilai.paths.add, query, 'POST', nilai.context.success, nilai.context.fail);
+};
+
+nilai.context.success = function(obj)
+{
+    //console.log(ibj);
+    if (obj.errors) {
+        for (var i in obj.errors) {
+            nilai.context.pushMessage('error', {'err': obj.errors[i], 'status': i});
             break;
         }
     }
-    else if (res.mark) {
+    else if (obj.mark) {
         nilai.context.pushMessage('success', 'This page has been saved to Nilai.');
     }
     else {
