@@ -35,7 +35,7 @@ nilai.context.pushMessage = function(type, msg)
 {
     type = (type == 'error') ? 'Error' : (type == 'success') ? 'Success' : 'Notice';
     msg  = type + ': ' + msg;
-    chrome.tabs.sendMessage(nilai.current_tab.id, {'message': msg, 'screen_width': nilai.current_tab.width, 'screen_height': nilai.current_tab.height, 'type': type.toLowerCase()}, function() {});
+    nilai.context.sendMessage(nilai.current_tab.id, {'message': msg, 'screen_width': nilai.current_tab.width, 'screen_height': nilai.current_tab.height, 'type': type.toLowerCase()}, 1)
 
     var color = (type == 'Error') ? '#ff0000' : '#000000';
     var text  = (type == 'Error') ? 'ERR' : 'OK';
@@ -48,8 +48,24 @@ nilai.context.pushMessage = function(type, msg)
     }, 2500);
 };
 
+nilai.context.sendMessage = function(tab_id, obj, attempt)
+{
+    if (attempt <= 5) {
+        chrome.tabs.sendMessage(tab_id, obj, function(res)
+        {
+            attempt += 1;
+            nilai.context.sendMessage(tab_id, obj, attempt);
+            //console.log(chrome.runtime.lastError);
+        });
+    }
+    else {
+        alert(obj.message);
+    }
+};
+
 nilai.context.save = function(obj)
 {
+    //console.log(obj);
     if (obj.mark) {
         nilai.context.pushMessage('notice', 'This page already exists in your account.');
     }
@@ -66,7 +82,7 @@ nilai.context.success = function(obj)
     //console.log(ibj);
     if (obj.errors) {
         for (var i in obj.errors) {
-            nilai.context.pushMessage('error', {'err': obj.errors[i], 'status': i});
+            nilai.context.pushMessage('error', obj.errors[i] + '(' + i +')');
             break;
         }
     }

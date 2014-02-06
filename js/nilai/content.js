@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback)
     t                   = (t < 0) ? 0 : t;
     t                   = t + parseInt(document.body.scrollTop, 10);
 
-    console.log(request);
+    //console.log(request);
 
     // Create new div
     // Set ID
