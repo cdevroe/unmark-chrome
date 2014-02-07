@@ -22,7 +22,7 @@ nilai.ajax = function(path, query, method, success_callback, error_callback)
         data: query,
         dataType: 'json',
         type: method,
-        headers: {'X-Requested-With': 'XMLHttpRequest', 'X-Chrome-Extension': 'Nilai'},
+        headers: {'X-Requested-With': 'XMLHttpRequest', 'X-Chrome-Extension': '1'},
         timeout: 2000,
         success: function(obj)
         {
