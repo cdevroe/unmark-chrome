@@ -9,13 +9,12 @@ nilai.omnibox.fail = function(obj)
     nilai.suggest(marks);
 };
 
-nilai.omnibox.success = function(res)
+nilai.omnibox.success = function(obj)
 {
-    //console.log(res);
-    if (res.marks) {
+    if (obj.marks) {
         var marks = [];
-        for (s in res.marks) {
-            marks.push({'description': res.marks[s].title, 'content': res.marks[s].url});
+        for (i in obj.marks) {
+            marks.push({'description': obj.marks[i].title, 'content': obj.marks[i].url});
         }
         nilai.suggest(marks);
     }
