@@ -27,10 +27,10 @@ nilai.host = 'http://nilai.plain';
 ## Loading your version in Chrome
 Now you should be able to load the unpacked extension locally and test. To do that simply follow these instructions:
 
-* Go To `chrome:://extensions` in Chrome.
-* Check the `Developer Mode` checkbox
-* Click the button that says `Load unpacked extension`
-* Choose the location of your code
+* Go To `chrome://extensions` in Chrome.
+* Check the `Developer Mode` checkbox.
+* Click the button that says `Load unpacked extension`.
+* Choose the location of your code.
 
 
 ## Shipping your version
