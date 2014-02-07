@@ -162,6 +162,11 @@ nilai.ext.log = function(what)
     chrome.extension.getBackgroundPage().console.log(what);
 };
 
+nilai.ext.login = function()
+{
+    window.open(nilai.host,'_newtab');
+};
+
 nilai.ext.restoreCallback = function(obj)
 {
     //nilai.ext.log(obj);
