@@ -16,10 +16,6 @@ nilai.context.chelseaHandler = function(info, tab)
     if (tab && is_page === true) {
         nilai.current_tab = tab;
         nilai.ajax(nilai.paths.ping, '', 'GET', nilai.context.check, nilai.context.fail);
-        //console.log("item " + info.menuItemId + " was clicked");
-        //console.log("info: " + JSON.stringify(info));
-        //console.log("tab: " + JSON.stringify(tab));
-
     }
 };
 
@@ -65,7 +61,6 @@ nilai.context.sendMessage = function(tab_id, obj, attempt)
 
 nilai.context.save = function(obj)
 {
-    //console.log(obj);
     if (obj.mark) {
         nilai.context.pushMessage('notice', 'This page already exists in your account.');
     }
@@ -79,7 +74,6 @@ nilai.context.save = function(obj)
 
 nilai.context.success = function(obj)
 {
-    //console.log(ibj);
     if (obj.errors) {
         for (var i in obj.errors) {
             nilai.context.pushMessage('error', obj.errors[i] + '(' + i +')');
