@@ -31,7 +31,7 @@ Now you should be able to load the unpacked extension locally and test. To do th
 
 * Go To `chrome://extensions` in Chrome.
 * Check the `Developer Mode` checkbox.
-* Click the button that says `Load unpacked extension`.
+* Click the button that says `Load unpacked extension...`.
 * Choose the location of your code.
 
 
