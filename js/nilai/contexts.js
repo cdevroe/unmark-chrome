@@ -103,6 +103,6 @@ chrome.contextMenus.create(
 {
     'title'               : 'Quick save to Nilai',
     'documentUrlPatterns' : ['http://*/*', 'https://*/*'],
-    'contexts'            : ['page'],
+    'contexts'            : ['page','selection'],
     'onclick'             : nilai.context.chelseaHandler
 });
