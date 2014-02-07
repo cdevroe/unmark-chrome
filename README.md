@@ -3,6 +3,9 @@ Here is our code for Nilai's Chrome extension. Feel free to use it. Below are a 
 
 **This code is NOT production ready. It is a work in progress at this point.**
 
+## Chrome Extensions Tutorial
+Not familiar with how to create Chrome extensions? [Click here to read the documentation](http://developer.chrome.com/extensions/index.html).
+
 ## Using your own host
 If you want to simply change the endpoint for this extension it's pretty simple.
 
