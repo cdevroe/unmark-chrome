@@ -1,6 +1,8 @@
 ## Hey There
 Here is our code for Nilai's Chrome extension. Feel free to use it. Below are a few instructions on how to customize it to work with your domain.
 
+**This code is NOT production ready. It is a work in progress at this point.**
+
 ## Using your own host
 If you want to simply change the endpoint for this extension it's pretty simple.
 
