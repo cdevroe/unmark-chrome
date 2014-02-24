@@ -1,5 +1,5 @@
-unmark.context     = {};
-unmark.current_tab = {};
+unmark.context          = {};
+unmark.current_tab      = {};
 
 unmark.context.check = function()
 {
@@ -17,6 +17,69 @@ unmark.context.chelseaHandler = function(info, tab)
         unmark.current_tab = tab;
         unmark.ajax(unmark.paths.ping, '', 'GET', unmark.context.check, unmark.context.fail);
     }
+};
+
+unmark.context.allTabsMessage = function(total_tabs, total_processed, total_success, total_failed, auth_error)
+{
+    if (total_tabs == total_processed) {
+        if (auth_error === true) {
+            unmark.context.pushMessage('error', 'Please log into your account first and then try again.');
+        }
+        else if (total_success = total_tabs) {
+            unmark.context.pushMessage('success', 'All tabs have been saved.');
+        }
+        else {
+            unmark.context.pushMessage('notice', 'Not all tabs could be saved, please try again.');
+        }
+    }
+};
+
+// Handle the clicky clicks
+unmark.context.saveAllTabs = function(info, tab)
+{
+    chrome.tabs.query({}, function(tabs)
+    {
+        var total_tabs      = tabs.length;
+        var total_processed = 0;
+        var total_success   = 0;
+        var total_failed    = 0;
+        var auth_error      = false;
+        var title, url      = null;
+
+        for (var x in tabs) {
+            title = tabs[x].title;
+            url   = tabs[x].url;
+
+            if (tabs[x].active === true) {
+                unmark.current_tab = tabs[x];
+            }
+
+            if (url.indexOf('http') == 0) {
+                var query = 'url=' + unmark.urlEncode(url) + '&title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode('#chrome');
+                unmark.ajax(unmark.paths.add, query, 'POST',
+                    function(obj)
+                    {
+                        total_success   += (obj.mark) ? 1 : 0;
+                        total_failed    += (! obj.mark) ? 1 : 0;
+                        total_processed += 1;
+                        unmark.context.allTabsMessage(total_tabs, total_processed, total_success, total_failed, auth_error);
+                    },
+                    function(obj)
+                    {
+                        var status       = obj.status || -1;
+                        auth_error       = (status == '403') ? true : auth_error;
+                        total_failed    += 1;
+                        total_processed += 1;
+                        unmark.context.allTabsMessage(total_tabs, total_processed, total_success, total_failed, auth_error);
+                    }
+                );
+            }
+            else {
+                total_tabs -= 1;
+                unmark.context.allTabsMessage(total_tabs, total_processed, total_success, total_failed, auth_error);
+            }
+        }
+    });
 };
 
 unmark.context.fail = function(obj)
@@ -101,8 +164,24 @@ chrome.contextMenus.create(
 
 chrome.contextMenus.create(
 {
-    'title'               : 'Quick save to Unmark',
+    'title'               : 'Save this page to Unmark',
     'documentUrlPatterns' : ['http://*/*', 'https://*/*'],
-    'contexts'            : ['page','selection'],
+    'contexts'            : ['selection'],
     'onclick'             : unmark.context.chelseaHandler
+});
+
+chrome.contextMenus.create(
+{
+    'title'               : 'Save this page',
+    'documentUrlPatterns' : ['http://*/*', 'https://*/*'],
+    'contexts'            : ['page'],
+    'onclick'             : unmark.context.chelseaHandler
+});
+
+chrome.contextMenus.create(
+{
+    'title'               : 'Save all tabs',
+    'documentUrlPatterns' : ['http://*/*', 'https://*/*'],
+    'contexts'            : ['page'],
+    'onclick'             : unmark.context.saveAllTabs
 });
