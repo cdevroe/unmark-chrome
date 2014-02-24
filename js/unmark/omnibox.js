@@ -1,31 +1,31 @@
-nilai.omnibox = {};
-nilai.suggest = null;
+unmark.omnibox = {};
+unmark.suggest = null;
 
-nilai.omnibox.fail = function(obj)
+unmark.omnibox.fail = function(obj)
 {
     //console.log(obj);
     var marks = [];
     marks.push({'description': obj.err, 'content': obj.status});
-    nilai.suggest(marks);
+    unmark.suggest(marks);
 };
 
-nilai.omnibox.success = function(obj)
+unmark.omnibox.success = function(obj)
 {
     if (obj.marks) {
         var marks = [];
         for (i in obj.marks) {
             marks.push({'description': obj.marks[i].title, 'content': obj.marks[i].url});
         }
-        nilai.suggest(marks);
+        unmark.suggest(marks);
     }
 };
 
 
 chrome.omnibox.onInputChanged.addListener(function(text, suggest)
 {
-    nilai.suggest = suggest;
+    unmark.suggest = suggest;
     if (text.length > 3) {
-        nilai.ajax(nilai.paths.search, 'q=' + nilai.urlEncode(text) + '&limit=5', 'GET', nilai.omnibox.success, nilai.omnibox.fail);
+        unmark.ajax(unmark.paths.search, 'q=' + unmark.urlEncode(text) + '&limit=5', 'GET', unmark.omnibox.success, unmark.omnibox.fail);
     }
 
 });
@@ -38,8 +38,8 @@ chrome.omnibox.onInputEntered.addListener(function(text)
             // Go to site
             chrome.tabs.update(tab.id, {'url' : text});
         } else {
-            // Search on nilai
-            chrome.tabs.update(tab.id, {'url' : nilai.host + nilai.paths.search + '?q=' + nilai.urlEncode(text)});
+            // Search on unmark
+            chrome.tabs.update(tab.id, {'url' : unmark.host + unmark.paths.search + '?q=' + unmark.urlEncode(text)});
         }
     });
 });

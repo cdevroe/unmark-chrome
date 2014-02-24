@@ -1,5 +1,5 @@
 ## Hey There
-Here is our code for Nilai's Chrome extension. Feel free to use it. Below are a few instructions on how to customize it to work with your domain.
+Here is our code for Unmark's Chrome extension. Feel free to use it. Below are a few instructions on how to customize it to work with your domain.
 
 **This code is NOT production ready. It is a work in progress at this point.**
 
@@ -15,16 +15,16 @@ If you want to simply change the endpoint for this extension it's pretty simple.
 "permissions": [
     "tabs",
     "contextMenus",
-    "*://nilai.plain/"
+    "*://unmark.plain/"
   ],
 ```
 
 Change the last line to match your site.
 
-* Open `js/nilai/base.js` and change line 2 to point to the correct endpoint.
+* Open `js/unmark/base.js` and change line 2 to point to the correct endpoint.
 
 ```
-nilai.host = 'http://nilai.plain';
+unmark.host = 'http://unmark.plain';
 ```
 
 * Save
