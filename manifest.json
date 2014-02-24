@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Nilai",
-  "description": "Nilai's Chrome extension for saving your marks",
+  "name": "Unmark",
+  "description": "Unmark's Chrome extension for saving your marks.",
   "version": "0.0.1",
   "homepage_url": "http://nilai.plain",
 
@@ -18,14 +18,14 @@
     "*://nilai.plain/"
   ],
 
-  "omnibox": { "keyword" : "nilai" },
+  "omnibox": { "keyword" : "unmark" },
 
   "background": {
     "scripts": [
       "js/third_party/jquery.js",
-      "js/nilai/base.js",
-      "js/nilai/omnibox.js",
-      "js/nilai/contexts.js"
+      "js/unmark/base.js",
+      "js/unmark/omnibox.js",
+      "js/unmark/contexts.js"
     ]
   },
 
@@ -34,14 +34,14 @@
         "19": "images/icon-19.png",
         "38": "images/icon-38.png"
       },
-      "default_title": "Save to Nilai",
-      "default_popup": "nilai.html"
+      "default_title": "Save to Unmark",
+      "default_popup": "umark.html"
   },
 
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["js/nilai/content.js"],
+      "js": ["js/unmark/content.js"],
       "all_frames": true,
       "run_at": "document_end"
     }
