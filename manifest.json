@@ -35,7 +35,7 @@
         "38": "images/icon-38.png"
       },
       "default_title": "Save to Unmark",
-      "default_popup": "umark.html"
+      "default_popup": "unmark.html"
   },
 
   "content_scripts": [
