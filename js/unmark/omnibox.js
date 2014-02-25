@@ -3,7 +3,6 @@ unmark.suggest = null;
 
 unmark.omnibox.fail = function(obj)
 {
-    //console.log(obj);
     var marks = [];
     marks.push({'description': obj.err, 'content': obj.status});
     unmark.suggest(marks);

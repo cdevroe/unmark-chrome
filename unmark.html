@@ -4,53 +4,95 @@
     <script type="text/javascript" src="js/third_party/jquery.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/unmark/base.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/unmark/extension.js" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="css/extension.css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather" rel="stylesheet" type="text/css">
+    <link href="css/extension.css" rel="stylesheet" type="text/css">
+    <link href="css/unmark.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/unmark/icons.js" charset="utf-8"></script>
 </head>
-<body>
-    <div id="container">
-        <div id="message"></div>
-        <div id="options">
+<body class="unmark-solo greybg">
 
-            <div id="edit-options">
-                <a href="#" data-method="archiveMark">Archive</a> |
-                <a href="#" data-method="deleteMark">Delete</a>
-            </div>
+    <div class="mark-added" id="options">
+        <div class="mark-added-block" id="message" style="display:none;">
+            This link has been added to your stream.
+            <i class="icon-check"></i>
+        </div>
 
-            <h1>Add Mark</h1>
-            <div id="text-title"></div>
-            <div id="text-url"></div>
-            <br clear="all">
-            <p>
-                <label for="notes">Label:</label>
-                <select id="label_id"></select>
-            </p>
-            <p>
-                <label for="notes">Notes:</label>
-                <textarea id="notes"></textarea>
-            </p>
-            <p>
-                <input type="button" id="submit" value="Add Mark">
-            </p>
-            <p id="edit-options">
-                <a href="#" data-method="archiveMark">Archive</a> |
-                <a href="#" data-method="deleteMark">Delete</a>
-            </p>
+        <div class="mark-added-info">
+            <h1 id="text-title"></h1>
+            <span id="text-url"></span>
         </div>
-        <div id="login">
-            <p>Please log into your account <a href="#" data-method="login">here</a>.</p>
+
+        <div class="mark-added-label mark-added-settings">
+            <span id="label-chosen"></span>
+            <a href="#" id="label-chosen-name" data-method="toggleLabels">Unlabeled</a>
+            <section>
+                <ul class="label-choices"></ul>
+            </section>
         </div>
-        <div id="error">
-            <p>An unexpected error occured. Please try again.</p>
+
+        <div class="mark-added-note mark-added-settings">
+            <a href="#" data-method="showNotes" id="notes-title">Add A Note</a>
+            <section class="hideoutline" contenteditable="true" id="notes"></section>
         </div>
-        <div id="invalid">
-            <p>The page you are trying to save has an invalid protocol. The page must use `http` or `https`.</p>
+
+        <div class="mark-added-actions">
+            <button id="submit" class="danger">Add Mark</button>
         </div>
-        <div id="archived">
-            <p>This mark is archived. You can <a href="#" data-method="restoreMark">restore it here</a> if you'd like.</p>
-        </div>
-         <div id="deleted">
-            <p>This mark has been deleted.</p>
+
+        <div id="edit-options">
+            <button class="delete" data-method="archiveMark">Archive</button>
+            <button class="delete" data-method="deleteMark">Delete</button>
         </div>
     </div>
+
+
+    <div class="mark-added" id="login">
+        <div class="mark-added-info">
+            <h1>Please log into your account</h1>
+        </div>
+        <div class="mark-added-actions">
+            <button class="danger" data-method="loginRedirect">Login</button>
+        </div>
+    </div>
+
+    <div class="mark-added" id="error">
+        <div class="mark-added-block">
+            An unexpected error has occured
+            <i class="icon-check"></i>
+        </div>
+        <div class="mark-added-actions">
+            <button class="danger" data-method="closePopup">Close</button>
+        </div>
+    </div>
+
+    <div class="mark-added" id="invalid">
+        <div class="mark-added-info">
+            <h1>This page has an invalid protocol. Only pages using "http(s)" can be saved.</h1>
+        </div>
+        <div class="mark-added-actions">
+            <button class="danger" data-method="closePopup">Close</button>
+        </div>
+    </div>
+
+    <div class="mark-added" id="archived">
+        <div class="mark-added-block">
+            This link has been archived
+            <i class="icon-check"></i>
+        </div>
+        <div class="mark-added-actions">
+            <button class="danger" data-method="restoreMark">Restore It</button>
+        </div>
+    </div>
+
+     <div class="mark-added" id="deleted">
+        <div class="mark-added-block">
+            This mark has been deleted
+            <i class="icon-check"></i>
+        </div>
+        <div class="mark-added-actions">
+            <button class="danger" data-method="closePopup">OK</button>
+        </div>
+    </div>
+
 </body>
 </html>
