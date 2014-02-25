@@ -2,19 +2,28 @@ var unmark           = (unmark === undefined) ? {} : unmark;
 unmark.ext           = {};
 unmark.ext.label_id  = 0;
 unmark.ext.mark_id   = 0;
+unmark.ext.notes     = 'Type note text here...';
 unmark.ext.tab_title = null;
 unmark.ext.tab_url   = null;
 
+unmark.ext.mark_info = {
+    'title'    : unmark.ext.tab_title,
+    'url'      : unmark.ext.tab_url,
+    'label_id' : unmark.ext.label_id,
+    'mark_id'  : unmark.ext.mark_id,
+    'notes'    : ''
+};
+
 unmark.ext.addCallback = function(obj)
 {
-    //unmark.ext.log(obj);
     if (obj.mark) {
-        unmark.ext.showMessage('success', 'You have successfully added this page as a mark.');
+        unmark.ext.showMessage('success', 'This link has been added to your stream.');
         $('#edit-options').fadeIn('fast');
-        unmark.ext.label_id = obj.mark.label_id;
-        unmark.ext.mark_id  = obj.mark.mark_id;
-        $('#submit').val('Edit Mark');
-        $('h1').html('Edit Mark');
+        unmark.ext.label_id           = obj.mark.label_id;
+        unmark.ext.mark_id            = obj.mark.mark_id;
+        unmark.ext.mark_info.mark_id  = obj.mark.mark_id;
+        unmark.ext.mark_info.label_id = obj.mark.label_id;
+        $('#submit').html('Edit Mark');
     }
     else {
         unmark.ext.updateError();
@@ -23,8 +32,12 @@ unmark.ext.addCallback = function(obj)
 
 unmark.ext.addMark = function()
 {
-    var query = 'label_id=' + unmark.urlEncode($('#label_id').val()) + '&notes=' + unmark.urlEncode($('#notes').val()) + '&url=' + unmark.urlEncode(unmark.ext.tab_url) + '&title=' + unmark.urlEncode(unmark.ext.tab_title);
-    unmark.ajax(unmark.paths.add, query, 'POST', unmark.ext.addCallback, unmark.ext.updateError);
+    delete unmark.ext.mark_info.mark_id;
+    var query = '';
+    for (var i in unmark.ext.mark_info) {
+        query += '&' + i + '=' + unmark.urlEncode(unmark.ext.mark_info[i]);
+    }
+    unmark.ajax(unmark.paths.add, query.substring(1), 'POST', unmark.ext.addCallback, unmark.ext.updateError);
 };
 
 unmark.ext.archiveCallback = function(obj)
@@ -55,6 +68,11 @@ unmark.ext.auth = function(obj)
     else {
         $('#error').fadeIn('fast');
     }
+};
+
+unmark.ext.closePopup = function()
+{
+    window.close();
 };
 
 unmark.ext.deleteCallback = function(obj)
@@ -89,8 +107,8 @@ unmark.ext.editCallback = function(obj)
 
 unmark.ext.editMark = function()
 {
-    var query = 'label_id=' + unmark.urlEncode($('#label_id').val()) + '&notes=' + unmark.urlEncode($('#notes').val());
-    unmark.ajax(unmark.paths.edit + '/' + unmark.ext.mark_id, query, 'POST', unmark.ext.editCallback, unmark.ext.updateError);
+    var query = 'label_id=' + unmark.urlEncode(unmark.ext.mark_info.label_id) + '&notes=' + unmark.urlEncode(unmark.ext.mark_info.notes);
+    unmark.ajax(unmark.paths.edit + '/' + unmark.ext.mark_info.mark_id, query, 'POST', unmark.ext.editCallback, unmark.ext.updateError);
 };
 
 unmark.ext.init = function(obj)
@@ -138,8 +156,20 @@ unmark.ext.loadOptions = function(obj)
     $('#text-url').html(unmark.ext.tab_url);
     $('#text-title').html(unmark.ext.tab_title);
     $('#notes').html(notes);
-    $('#submit').val(button);
-    $('h1').html(button);
+    $('#submit').html(button);
+    //$('h1').html(button);
+
+    // Set mark object goodies
+    unmark.ext.mark_info.title    = unmark.ext.tab_title;
+    unmark.ext.mark_info.url      =  unmark.ext.tab_url;
+    unmark.ext.mark_info.label_id =  unmark.ext.label_id;
+    unmark.ext.mark_info.notes    =  notes;
+    unmark.ext.mark_info.mark_id  =  unmark.ext.mark_id;
+
+    // Notes label
+    if (! unmark.empty(notes)) {
+        $('#notes-title').html('Edit Notes');
+    }
 
     // If archived, show archive view
     // Else show add/edit view
@@ -193,24 +223,88 @@ unmark.ext.setLabels = function(obj)
         var selected = '';
         for (var i in obj.labels) {
             selected = (obj.labels[i].label_id == unmark.ext.label_id) ? true : false;
-            $('#label_id').append($('<option></option>').attr('value', obj.labels[i].label_id).attr('selected', selected).text(obj.labels[i].name));
+            if (selected === true) {
+                $('#label-chosen-name').html(obj.labels[i].name).addClass('label-' + obj.labels[i].label_id);
+                //$('#label-chosen-id').html(obj.labels[i].label_id);
+            }
+
+            $('ul.label-choices').prepend('<li class="label-' + obj.labels[i].label_id + '"><a href="#" id="label-choice-' + obj.labels[i].label_id + '" rel="' + obj.labels[i].label_id + '"><span>' + obj.labels[i].name + '</span></a></li>');
         }
+
+        // Store labels
         localStorage.setItem('unmark_labels', JSON.stringify(obj));
+
+        var hover_span    = $('#label-chosen');
+        var label_choices = $('ul.label-choices');
+        var label_chosen  = $('#label-chosen-name');
+
+        // Add click events
+        label_choices.find('a').unbind();
+        label_choices.find('a').on('click', function (e)
+        {
+            e.preventDefault();
+            var obj = $(this);
+            unmark.ext.label_id = obj.attr('id').split('-')[2];
+            label_chosen.html(obj.find('span').html());
+            label_chosen.removeClass().addClass(obj.parent().attr('class'));
+            unmark.ext.toggleLabels();
+            hover_span.hide().removeClass();
+            unmark.ext.mark_info.label_id = unmark.ext.label_id;
+        });
+
+        label_choices.find('a').hover(
+            function()
+            {
+                var obj   = $(this);
+                var eyed  = obj.attr('id').split('-')[2];
+                var label = obj.find('span').html();
+                hover_span.addClass('label-' + eyed).html(label).show();
+            },
+            function()
+            {
+                hover_span.hide().removeClass();
+            }
+        );
     }
 
-    //unmark.ext.log(obj);
+    //unmark.ext.log($('ul.label-choices').html());
 };
 
 unmark.ext.showMessage = function(type, msg)
 {
     var color = (type == 'error') ? 'F2BBB8' : (type == 'success') ? '73D9B7' : 'F0F593';
-    $('#message').css('background-color', '#' + color).html(msg).fadeIn('fast', function()
+    $('#message').html(msg).fadeIn('fast', function()
     {
         var timer = setTimeout(function()
         {
             $('#message').fadeOut('fast');
         }, 3500);
     });
+};
+
+unmark.ext.showNotes = function()
+{
+    var obj   = $('#notes');
+    var notes = (obj.html() == '') ? unmark.ext.notes : obj.html();
+
+    if (obj.is(':visible')) {
+        var notes_title = (notes == unmark.ext.notes) ? 'Add A Note' : 'Edit Notes';
+        notes           = (notes == unmark.ext.notes) ? '' : notes;
+        obj.fadeOut();
+        $('#notes-title').html(notes_title);
+    }
+    else {
+       obj.html(notes).fadeIn();
+    }
+
+    unmark.ext.mark_info.notes = (notes == unmark.ext.notes) ? '' : notes;
+};
+
+unmark.ext.toggleLabels = function()
+{
+    var obj    = $('ul.label-choices').parent();
+    var method = (obj.is(':visible')) ? 'fadeOut' : 'fadeIn';
+    obj[method]();
 };
 
 unmark.ext.updateError = function()
@@ -227,14 +321,19 @@ $(document).ready(function()
     $('#submit').click(function(e)
     {
         e.preventDefault();
-        var method = ($(this).val().indexOf('Add') >= 0) ? 'addMark' : 'editMark';
+        var method = ($(this).html().indexOf('Add') >= 0) ? 'addMark' : 'editMark';
         unmark.ext[method]();
     });
 
-    $('a[href="#"]').click(function(e)
+    $('a[href="#"], button[id!="submit"]').click(function(e)
     {
         e.preventDefault();
         var method = $(this).data('method');
         unmark.ext[method]();
+    });
+
+    $('#notes').keyup(function()
+    {
+        unmark.ext.mark_info.notes = $(this).html();
     });
 });

@@ -68,7 +68,7 @@ unmark.isset = function(v)
 
 unmark.replaceSpecial = function(str)
 {
-    if (str !== undefined && str !== null) {
+    if (str !== undefined && ! unmark.empty(str)) {
         var regex = null;
         for (var i in unmark.special_chars) {
             regex = new RegExp(i, 'gi');
