@@ -3,16 +3,17 @@
     width: 350px;
 }
 
-#message {
+#options {
+    width: 400px;
+    margin: 5px;
+}
+
+#message, #edit-options {
     width: 100%;
 }
 
-#options {
-    width: 500px;
-}
-
-#options {
-    margin: 5px;
+#deleted, #archived, #error {
+    height: 200px;
 }
 
 #text-title, #text-url {
@@ -25,4 +26,17 @@
 #text-url {
     font-size: 12px;
     color: #777;
+}
+
+.button-margins {
+    margin-top: -70px !important;
+}
+
+.button-margins-small {
+    margin-top: -20px !important;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
 }

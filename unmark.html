@@ -5,8 +5,8 @@
     <script type="text/javascript" src="js/unmark/base.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/unmark/extension.js" charset="utf-8"></script>
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather" rel="stylesheet" type="text/css">
-    <link href="css/extension.css" rel="stylesheet" type="text/css">
     <link href="css/unmark.css" rel="stylesheet" type="text/css">
+    <link href="css/extension.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="js/unmark/icons.js" charset="utf-8"></script>
 </head>
 <body class="unmark-solo greybg">
@@ -35,7 +35,7 @@
             <section class="hideoutline" contenteditable="true" id="notes"></section>
         </div>
 
-        <div class="mark-added-actions">
+        <div class="mark-added-actions center">
             <button id="submit" class="danger">Add Mark</button>
         </div>
 
@@ -48,16 +48,16 @@
 
     <div class="mark-added" id="login">
         <div class="mark-added-info">
-            <h1>Please log into your account</h1>
+            <h1>Please log into your account.</h1>
         </div>
-        <div class="mark-added-actions">
-            <button class="danger" data-method="loginRedirect">Login</button>
+        <div class="mark-added-actions button-margins">
+            <button class="danger" data-method="login">Login</button>
         </div>
     </div>
 
     <div class="mark-added" id="error">
         <div class="mark-added-block">
-            An unexpected error has occured
+            An unexpected error has occured.
             <i class="icon-check"></i>
         </div>
         <div class="mark-added-actions">
@@ -69,27 +69,27 @@
         <div class="mark-added-info">
             <h1>This page has an invalid protocol. Only pages using "http(s)" can be saved.</h1>
         </div>
-        <div class="mark-added-actions" style="margin-top:-75px;">
+        <div class="mark-added-actions button-margins">
             <button class="danger" data-method="closePopup">Close</button>
         </div>
     </div>
 
     <div class="mark-added" id="archived">
         <div class="mark-added-block">
-            This link has been archived
+            This link has been archived.
             <i class="icon-check"></i>
         </div>
-        <div class="mark-added-actions">
+        <div class="mark-added-actions button-margins-small">
             <button class="danger" data-method="restoreMark">Restore It</button>
         </div>
     </div>
 
      <div class="mark-added" id="deleted">
         <div class="mark-added-block">
-            This mark has been deleted
+            This mark has been deleted.
             <i class="icon-check"></i>
         </div>
-        <div class="mark-added-actions">
+        <div class="mark-added-actions button-margins-small">
             <button class="danger" data-method="closePopup">Close</button>
         </div>
     </div>

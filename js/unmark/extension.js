@@ -335,5 +335,6 @@ $(document).ready(function()
     $('#notes').keyup(function()
     {
         unmark.ext.mark_info.notes = $(this).html();
+        unmark.ext.mark_info.notes = (unmark.empty(unmark.ext.mark_info.notes) || unmark.ext.mark_info.notes == 'null') ? '' : unmark.ext.mark_info.notes;
     });
 });
