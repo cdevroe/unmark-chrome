@@ -5,7 +5,6 @@
 
 #options {
     width: 400px;
-    margin: 5px;
 }
 
 #message, #edit-options {
@@ -40,3 +39,79 @@
     margin: 0 auto;
     text-align: center;
 }
+
+button {
+    font-family: "Montserrat", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    -webkit-font-smoothing: antialiased;
+    font-size: 11px;
+}
+
+.mark-added .mark-added-actions {
+    background: #f9f9f9;
+    border-top: 1px solid #ededed;
+    padding: 20px 20px 22px;
+}
+.mark-added .mark-added-actions button {
+    padding: 11px 0;
+    width: 100%;
+}
+.mark-added .mark-added-info {
+    padding: 20px 20px 25px;
+}
+.mark-added .mark-added-info h1 {
+    font-size: 18px;
+    line-height: 25px;
+    color: #111;
+    margin: 0;
+}
+.button-margins {
+    margin-top: -18px !important;
+}
+.mark-added .mark-added-block {
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    padding: 16px 20px 38px;
+}
+.mark-added .mark-added-block i {
+    margin-top: -3px;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
+.mark-added#options .mark-added-block {
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    padding: 16px 20px 20px;
+}
+.mark-added#options .mark-added-info h1 {
+    font-size: 20px;
+}
+.mark-added#options .mark-added-info #text-url {
+    margin-top: 8px;
+}
+.mark-added#options .mark-added-block i {
+    margin-right: -3px;
+}
+.mark-added .mark-added-settings {
+    border-top: 1px solid #ededed;
+    padding: 20px;
+    line-height: 19px;
+}
+.mark-added .mark-added-settings a {
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 1px;
+    font-size: 11px;
+    padding-left: 28px;    
+}
+.mark-added .mark-added-settings a:before {
+    left: -1px;
+}
+.mark-added-label, .mark-added-note {
+    background: #f9f9f9;
+}
+.mark-added .mark-added-note {
+    border-bottom: none;
+}
+
