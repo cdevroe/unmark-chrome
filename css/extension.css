@@ -9,6 +9,9 @@
 
 #message, #edit-options {
     width: 100%;
+    background: #f9f9f9;
+    padding: 0 20px 20px;
+    margin: -14px 0;
 }
 
 #deleted, #archived, #error {
@@ -47,7 +50,13 @@ button {
     -webkit-font-smoothing: antialiased;
     font-size: 11px;
 }
-
+button.delete {
+    width: 49%;
+    padding: 10px 0;
+}
+button.delete:nth-child(even) {
+    float: right;
+}
 .mark-added .mark-added-actions {
     background: #f9f9f9;
     border-top: 1px solid #ededed;
@@ -78,7 +87,7 @@ button {
     margin-top: -3px;
     width: 20px;
     height: 20px;
-    margin-right: 6px;
+    margin-right: -4px;
 }
 .mark-added#options .mark-added-block {
     font-family: "Montserrat", sans-serif;
@@ -107,6 +116,25 @@ button {
 }
 .mark-added .mark-added-settings a:before {
     left: -1px;
+}
+.mark-added .mark-added-settings.mark-added-label section {
+    top: 13px;
+    left: 9px;
+}
+.mark-added .mark-added-settings #label-chosen {
+    left: 250px;
+    top: 20px;
+    font-size: 11px;
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    text-transform: uppercase;
+}
+.mark-added .mark-added-settings section {
+    top: 10px;
+    opacity: 1;
+    padding: 10px 20px;
+    color: #303030;
+    letter-spacing: normal;
 }
 .mark-added-label, .mark-added-note {
     background: #f9f9f9;
