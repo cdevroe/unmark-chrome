@@ -24,7 +24,7 @@ Change the last line to match your site.
 * Open `js/unmark/base.js` and change line 2 to point to the correct endpoint.
 
 ```
-unmark.host = 'http://unmark.plain';
+unmark.host = 'https://unmark.it';
 ```
 
 * Save

@@ -4,7 +4,7 @@
   "name": "Unmark",
   "description": "Unmark's Chrome extension for saving your marks.",
   "version": "0.0.1",
-  "homepage_url": "http://nilai.plain",
+  "homepage_url": "https://unmark.it",
 
   "icons": {
     "16":  "images/icon-16.png",
@@ -15,7 +15,7 @@
   "permissions": [
     "tabs",
     "contextMenus",
-    "*://nilai.plain/"
+    "*://unmark.it/"
   ],
 
   "omnibox": { "keyword" : "unmark" },

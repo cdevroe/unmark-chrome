@@ -1,5 +1,5 @@
 var unmark            = (unmark === undefined) ? {} : unmark;
-unmark.host           = 'http://nilai.plain';
+unmark.host           = 'https://unmark.it';
 unmark.paths          = {
     'add'     : '/mark/add',
     'archive' : '/mark/archive',

@@ -205,10 +205,9 @@ chrome.contextMenus.create(
     'onclick'             : unmark.context.chelseaHandler
 });
 
-chrome.contextMenus.create(
+/*chrome.contextMenus.create(
 {
     'title'               : 'Save all tabs',
-    'documentUrlPatterns' : ['http://*/*', 'https://*/*'],
     'contexts'            : ['page'],
     'onclick'             : unmark.context.handleAllTabs
-});
+});*/
