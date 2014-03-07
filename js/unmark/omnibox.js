@@ -12,8 +12,14 @@ unmark.omnibox.success = function(obj)
 {
     if (obj.marks) {
         var marks = [];
-        for (i in obj.marks) {
-            marks.push({'description': obj.marks[i].title, 'content': obj.marks[i].url});
+        if (obj.restricted_from) {
+            marks.push({'description': 'Please upgrade your account to search.', 'content': 'https://unmark.it'});
+        }
+        else {
+            for (i in obj.marks) {
+                title =
+                marks.push({'description': obj.marks[i].title, 'content': obj.marks[i].url});
+            }
         }
         unmark.suggest(marks);
     }
