@@ -10,26 +10,30 @@ unmark.omnibox.fail = function(obj)
 
 unmark.omnibox.success = function(obj)
 {
-    if (obj.marks) {
-        var marks = [];
-        if (obj.restricted_from) {
-            marks.push({'description': 'Please upgrade your account to search.', 'content': 'https://unmark.it'});
-        }
-        else {
-            for (i in obj.marks) {
-                title =
-                marks.push({'description': obj.marks[i].title, 'content': obj.marks[i].url});
-            }
-        }
-        unmark.suggest(marks);
+    var marks = [];
+    if (obj.restricted_from) {
+        marks.push({'description': 'Please upgrade your account to search.', 'content': 'https://unmark.it'});
     }
+    else if (obj.total && obj.total >= 1) {
+        var title = '';
+        for (i in obj.marks) {
+            marks.push({'description': obj.marks[i].title.replace('&', '&amp;'), 'content': obj.marks[i].url});
+        }
+    }
+
+    if (marks.length < 1) {
+        marks.push({'description': 'No marks found. Please visit your account to view all your marks.', 'content': 'https://unmark.it'});
+    }
+
+    // If marks are found
+    unmark.suggest(marks);
 };
 
 
 chrome.omnibox.onInputChanged.addListener(function(text, suggest)
 {
     unmark.suggest = suggest;
-    if (text.length > 3) {
+    if (text.length >= 3) {
         unmark.ajax(unmark.paths.search, 'q=' + unmark.urlEncode(text) + '&limit=5', 'GET', unmark.omnibox.success, unmark.omnibox.fail);
     }
 
