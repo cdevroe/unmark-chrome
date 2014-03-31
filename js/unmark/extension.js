@@ -17,7 +17,7 @@ unmark.ext.mark_info = {
 unmark.ext.addCallback = function(obj)
 {
     if (obj.mark) {
-        unmark.ext.showMessage('success', 'This link has been added to your stream.');
+        unmark.ext.showMessage('success', 'This link has been added to your stream.<i class="icon-check"></i>');
         $('#edit-options').fadeIn('fast');
         unmark.ext.label_id           = obj.mark.label_id;
         unmark.ext.mark_id            = obj.mark.mark_id;
@@ -98,7 +98,7 @@ unmark.ext.editCallback = function(obj)
 {
     //unmark.ext.log(obj);
     if (obj.mark) {
-        unmark.ext.showMessage('success', 'The mark was successfully updated.');
+        unmark.ext.showMessage('success', 'The mark was successfully updated. <i class="icon-check"></i>');
     }
     else {
         unmark.ext.updateError();
@@ -272,8 +272,8 @@ unmark.ext.setLabels = function(obj)
 
 unmark.ext.showMessage = function(type, msg)
 {
-    var color = (type == 'error') ? 'F2BBB8' : (type == 'success') ? '73D9B7' : 'F0F593';
-    $('#message').html(msg).fadeIn('fast', function()
+    var color = (type == 'error') ? '#F2BBB8' : (type == 'success') ? '#73D9B7' : '#F0F593';
+    $('#message').html(msg).css('background', color).fadeIn('fast', function()
     {
         var timer = setTimeout(function()
         {
