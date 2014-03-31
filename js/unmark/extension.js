@@ -17,13 +17,13 @@ unmark.ext.mark_info = {
 unmark.ext.addCallback = function(obj)
 {
     if (obj.mark) {
-        unmark.ext.showMessage('success', 'This link has been added to your stream.');
+        unmark.ext.showMessage('success', 'This link has been added to your stream.<i class="icon-check"></i>');
         $('#edit-options').fadeIn('fast');
         unmark.ext.label_id           = obj.mark.label_id;
         unmark.ext.mark_id            = obj.mark.mark_id;
         unmark.ext.mark_info.mark_id  = obj.mark.mark_id;
         unmark.ext.mark_info.label_id = obj.mark.label_id;
-        $('#submit').html('Edit Mark');
+        $('#submit').html('Update Mark');
     }
     else {
         unmark.ext.updateError();
@@ -98,7 +98,7 @@ unmark.ext.editCallback = function(obj)
 {
     //unmark.ext.log(obj);
     if (obj.mark) {
-        unmark.ext.showMessage('success', 'The mark was successfully updated.');
+        unmark.ext.showMessage('success', 'The mark was successfully updated. <i class="icon-check"></i>');
     }
     else {
         unmark.ext.updateError();
@@ -135,7 +135,7 @@ unmark.ext.loadOptions = function(obj)
     // Set the defaults
     var action   = (obj.mark) ? 'edit' : 'add';
     var notes    = (obj.mark) ? obj.mark.notes : '';
-    var button   = (obj.mark) ? 'Edit Mark' : 'Add Mark';
+    var button   = (obj.mark) ? 'Update Mark' : 'Add Mark';
     var archived = (obj.mark) ? obj.mark.archived_on : '';
 
     // Set globally to be used in callback
@@ -272,12 +272,14 @@ unmark.ext.setLabels = function(obj)
 
 unmark.ext.showMessage = function(type, msg)
 {
-    var color = (type == 'error') ? 'F2BBB8' : (type == 'success') ? '73D9B7' : 'F0F593';
-    $('#message').html(msg).fadeIn('fast', function()
+    var color = (type == 'error') ? '#F2BBB8' : (type == 'success') ? '#73D9B7' : '#F0F593';
+    var savedHeight = $('html').height();
+    $('#message').html(msg).css('background', color).fadeIn('fast', function()
     {
         var timer = setTimeout(function()
         {
             $('#message').fadeOut('fast');
+            $('html').height(savedHeight);
         }, 3500);
     });
 };
@@ -330,6 +332,12 @@ $(document).ready(function()
         e.preventDefault();
         var method = $(this).data('method');
         unmark.ext[method]();
+    });
+
+    $('#notes').click(function()
+    {
+        if ($("#notes").html() == unmark.ext.notes)
+            $("#notes").html('');
     });
 
     $('#notes').keyup(function()
