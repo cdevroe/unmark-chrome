@@ -332,6 +332,12 @@ $(document).ready(function()
         unmark.ext[method]();
     });
 
+    $('#notes').click(function()
+    {
+        if ($("#notes").html() == unmark.ext.notes)
+            $("#notes").html('');
+    });
+
     $('#notes').keyup(function()
     {
         unmark.ext.mark_info.notes = $(this).html();
