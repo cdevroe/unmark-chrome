@@ -23,7 +23,7 @@ unmark.ext.addCallback = function(obj)
         unmark.ext.mark_id            = obj.mark.mark_id;
         unmark.ext.mark_info.mark_id  = obj.mark.mark_id;
         unmark.ext.mark_info.label_id = obj.mark.label_id;
-        $('#submit').html('Edit Mark');
+        $('#submit').html('Update Mark');
     }
     else {
         unmark.ext.updateError();
@@ -135,7 +135,7 @@ unmark.ext.loadOptions = function(obj)
     // Set the defaults
     var action   = (obj.mark) ? 'edit' : 'add';
     var notes    = (obj.mark) ? obj.mark.notes : '';
-    var button   = (obj.mark) ? 'Edit Mark' : 'Add Mark';
+    var button   = (obj.mark) ? 'Update Mark' : 'Add Mark';
     var archived = (obj.mark) ? obj.mark.archived_on : '';
 
     // Set globally to be used in callback
