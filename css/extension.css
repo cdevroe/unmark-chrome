@@ -1,3 +1,7 @@
+html, body {
+    min-height: inherit;
+}
+
 #options, #login, #error, #invalid, #edit-options, #archived, #deleted, #message {
     display: none;
     width: 350px;
