@@ -10,8 +10,7 @@
 #message, #edit-options {
     width: 100%;
     background: #f9f9f9;
-    padding: 0 20px 20px;
-    margin: -14px 0;
+    padding: 0px 20px 20px;
 }
 
 #deleted, #archived, #error {
