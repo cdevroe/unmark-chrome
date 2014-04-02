@@ -272,7 +272,7 @@ unmark.ext.setLabels = function(obj)
 
 unmark.ext.showMessage = function(type, msg)
 {
-    var color = (type == 'error') ? '#F2BBB8' : (type == 'success') ? '#73D9B7' : '#F0F593';
+    var color = (type == 'error') ? '#F2BBB8' : (type == 'success') ? '#49b3e2' : '#F0F593';
     var savedHeight = $('html').height();
     $('#message').html(msg).css('background', color).fadeIn('fast', function()
     {
