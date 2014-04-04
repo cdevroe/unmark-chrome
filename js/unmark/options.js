@@ -16,13 +16,11 @@ unmark.bookmarks.digest = function()
 
     if (unmark.bookmarks.totals.total > 0) {
         $('#progress').html('0%').fadeIn('fast').width('25px');
+        var eyed = '';
         $('input[id^="import-"]:checked').each(function()
         {
-            var eyed = $(this).attr('id').split('-')[1];
-            var url   = unmark.bookmarks.list[eyed].url;
-            var title = unmark.bookmarks.list[eyed].title;
-            var query = 'url=' + unmark.urlEncode(url) + '&title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode('#chromeImport');
-            unmark.bookmarks.to_save.push(query);
+            eyed = $(this).attr('id').split('-')[1];
+            unmark.bookmarks.to_save.push('url=' + unmark.urlEncode(unmark.bookmarks.list[eyed].url) + '&title=' + unmark.urlEncode(unmark.bookmarks.list[eyed].title) + '&notes=' + unmark.urlEncode('#chromeImport'));
         });
         unmark.bookmarks.save();
 
@@ -43,7 +41,7 @@ unmark.bookmarks.digest = function()
 unmark.bookmarks.fail = function(obj)
 {
     var status = obj.status || -1;
-    var err    = (status == '500' || status == '404' || obj.error === undefined) ? 'Something went wrong.' : (status == '403') ? 'Please log into your account first and then try again.' : obj.err;
+    var err    = (status == '500' || status == '404' || obj.error === undefined) ? 'Something went wrong.' : (status == '403') ? 'Please log into your account first and then try again.' : obj.error;
     status     = (status > 0 && status != '403') ? ' (' + status + ')' : '';
     unmark.bookmarks.writeMessage(err + status);
 };
