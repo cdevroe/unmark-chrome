@@ -13,6 +13,7 @@ unmark.bookmarks.digest = function()
     unmark.bookmarks.totals.failed     = 0;
     unmark.bookmarks.totals.processed  = 0;
     unmark.bookmarks.to_save           = [];
+    unmark.bookmarks.current_w         = 0;
 
     if (unmark.bookmarks.totals.total > 0) {
         $('#progress').html('0%').fadeIn('fast').width('25px');
