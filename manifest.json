@@ -3,7 +3,7 @@
 
   "name": "Unmark",
   "description": "Unmark's Chrome extension for saving your marks.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage_url": "https://unmark.it",
 
   "icons": {
@@ -12,9 +12,12 @@
     "128": "images/icon-128.png"
   },
 
+  "options_page": "options.html",
+
   "permissions": [
     "tabs",
     "contextMenus",
+    "bookmarks",
     "*://unmark.it/"
   ],
 
