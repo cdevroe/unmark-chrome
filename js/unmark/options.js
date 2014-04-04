@@ -94,12 +94,12 @@ unmark.bookmarks.update = function()
 {
     var max_width  = 800;
     var min_width  = 25;
-    var growth_per = Math.floor(max_width / unmark.bookmarks.totals.total);
+    var growth_per = Math.ceil(max_width / unmark.bookmarks.totals.total);
     unmark.bookmarks.totals.processed += 1;
     unmark.bookmarks.current_w += growth_per;
     unmark.bookmarks.current_w = (unmark.bookmarks.current_w < min_width) ? min_width : unmark.bookmarks.current_w;
     unmark.bookmarks.current_w = (unmark.bookmarks.current_w > max_width) ? max_width : unmark.bookmarks.current_w;
-    $('#progress').width(unmark.bookmarks.current_w + 'px').html(Math.ceil((unmark.bookmarks.totals.processed / unmark.bookmarks.totals.total) * 100) + '%');
+    $('#progress').width(unmark.bookmarks.current_w + 'px').html(Math.floor((unmark.bookmarks.totals.processed / unmark.bookmarks.totals.total) * 100) + '%');
     unmark.bookmarks.save();
 };
 
