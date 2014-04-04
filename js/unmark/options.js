@@ -15,7 +15,7 @@ unmark.bookmarks.digest = function()
     unmark.bookmarks.to_save           = [];
 
     if (unmark.bookmarks.totals.total > 0) {
-        var progress  = $('#progress').fadeIn('fast');
+        $('#progress').html('0%').fadeIn('fast').width('25px');
         $('input[id^="import-"]:checked').each(function()
         {
             var eyed = $(this).attr('id').split('-')[1];
@@ -31,6 +31,7 @@ unmark.bookmarks.digest = function()
             if (unmark.bookmarks.totals.total == unmark.bookmarks.totals.processed) {
                 clearInterval(unmark.bookmarks.timers.message);
                 unmark.bookmarks.writeMessage(unmark.bookmarks.totals.success + ' out of ' + unmark.bookmarks.totals.total + ' bookmarks successfully saved to Unmark.');
+                $('#progress').fadeOut();
             }
         }, 1);
     }
@@ -93,7 +94,7 @@ unmark.bookmarks.update = function()
 {
     var max_width  = 800;
     var min_width  = 25;
-    var growth_per = Math.ceil(max_width / unmark.bookmarks.totals.total);
+    var growth_per = Math.floor(max_width / unmark.bookmarks.totals.total);
     unmark.bookmarks.totals.processed += 1;
     unmark.bookmarks.current_w += growth_per;
     unmark.bookmarks.current_w = (unmark.bookmarks.current_w < min_width) ? min_width : unmark.bookmarks.current_w;
@@ -136,6 +137,6 @@ $(document).ready(function()
     $('#digest').click(function(e)
     {
         e.preventDefault();
-        unmark.ajax(unmark.paths.ping, '', 'GET', unmark.bookmarks.digest, unmark.bookmarks.authFail);
+        unmark.ajax(unmark.paths.ping, '', 'GET', unmark.bookmarks.digest, unmark.bookmarks.fail);
     });
 });
