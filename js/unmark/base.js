@@ -12,6 +12,7 @@ unmark.paths          = {
     'search'  : '/marks/search'
 };
 unmark.special_chars  = {'\\+': '&#43;'};
+unmark.storage_type   = 'sync';
 
 unmark.ajax = function(path, query, method, success_callback, error_callback)
 {
@@ -80,7 +81,7 @@ unmark.replaceSpecial = function(str)
 
 unmark.storageClear = function(callback)
 {
-    chrome.storage.sync.clear(function()
+    chrome.storage[unmark.storage_type].clear(function()
     {
         if ($.isFunction(callback)) {
             callback();
@@ -90,7 +91,7 @@ unmark.storageClear = function(callback)
 
 unmark.storageGet = function(k, callback)
 {
-    chrome.storage.sync.get(k, function(items)
+    chrome.storage[unmark.storage_type].get(k, function(items)
     {
         if ($.isFunction(callback)) {
             callback(items);
@@ -100,7 +101,7 @@ unmark.storageGet = function(k, callback)
 
 unmark.storageRemove = function(k, callback)
 {
-    chrome.storage.sync.remove(k, function()
+    chrome.storage[unmark.storage_type].remove(k, function()
     {
         if ($.isFunction(callback)) {
             callback(k);
@@ -110,7 +111,7 @@ unmark.storageRemove = function(k, callback)
 
 unmark.storageSet = function(obj, callback)
 {
-    chrome.storage.sync.set(obj, function()
+    chrome.storage[unmark.storage_type].set(obj, function()
     {
         if ($.isFunction(callback)) {
             callback(obj);

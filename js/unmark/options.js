@@ -5,6 +5,8 @@ unmark.bookmarks.totals = {};
 unmark.bookmarks.timers = {};
 unmark.bookmarks.to_save = [];
 unmark.bookmarks.current_w = 0;
+unmark.bookmarks.synced    = [];
+unmark.bookmarks.total     = 0;
 
 unmark.bookmarks.digest = function()
 {
@@ -22,7 +24,11 @@ unmark.bookmarks.digest = function()
         $('input[id^="import-"]:checked').each(function()
         {
             eyed = $(this).attr('id').split('-')[1];
-            unmark.bookmarks.to_save.push('url=' + unmark.urlEncode(unmark.bookmarks.list[eyed].url) + '&title=' + unmark.urlEncode(unmark.bookmarks.list[eyed].title) + '&notes=' + unmark.urlEncode('#chromeImport'));
+            unmark.bookmarks.to_save.push({
+                'query': 'url=' + unmark.urlEncode(unmark.bookmarks.list[eyed].url) + '&title=' + unmark.urlEncode(unmark.bookmarks.list[eyed].title) + '&notes=' + unmark.urlEncode('#chromeImport'),
+                'chrome_id': unmark.bookmarks.list[eyed].id,
+                'eyed': eyed
+            });
         });
         unmark.bookmarks.save();
 
@@ -50,12 +56,24 @@ unmark.bookmarks.fail = function(obj)
 
 unmark.bookmarks.get = function(bookmarks)
 {
+    var found = false;
     bookmarks.forEach(function(bookmark) {
         if (bookmark.children && bookmark.children.length > 0) {
             unmark.bookmarks.get(bookmark.children);
         }
         else if (bookmark.url !== undefined && bookmark.url.indexOf('http') == 0) {
-            unmark.bookmarks.list.push({'title': bookmark.title, 'url': bookmark.url, 'id': bookmark.id});
+            for (var i = 0; i <= unmark.bookmarks.synced.length; i++) {
+                if (unmark.bookmarks.synced[i] == bookmark.id) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found === false) {
+                unmark.bookmarks.list.push({'title': bookmark.title, 'url': bookmark.url, 'id': bookmark.id});
+                unmark.bookmarks.total += 1;
+                unmark.bookmarks.updateTotal();
+            }
         }
     });
 };
@@ -63,20 +81,32 @@ unmark.bookmarks.get = function(bookmarks)
 unmark.bookmarks.save = function()
 {
     if (unmark.bookmarks.to_save.length > 0) {
-        unmark.ajax(unmark.paths.add, unmark.bookmarks.to_save.shift(), 'POST',
+        var query     = unmark.bookmarks.to_save.shift();
+        var chrome_id = query.chrome_id;
+        var eyed      = query.eyed;
+        query         = query.query;
+        unmark.ajax(unmark.paths.add, query, 'POST',
         function(obj)
         {
             if (obj.mark) {
                 unmark.bookmarks.totals.success += 1;
+                unmark.bookmarks.synced.push(chrome_id);
+                unmark.storage_type = 'local';
+                unmark.storageSet({'synced_marks': unmark.bookmarks.synced});
+                $('input[id^="import-' + eyed + '"]').attr('disabled', true);
+                $('input[id^="import-' + eyed + '"]').parent().fadeOut('slow');
+                unmark.bookmarks.total -= 1;
+                unmark.bookmarks.updateTotal();
             }
             else {
                 unmark.bookmarks.totals.failed += 1;
             }
+            unmark.storage_type = 'sync';
             unmark.bookmarks.update();
         },
         function(obj)
         {
-            unmark.bookmarks.totals.failed    += 1;
+            unmark.bookmarks.totals.failed += 1;
             unmark.bookmarks.update();
         });
     }
@@ -86,7 +116,7 @@ unmark.bookmarks.set = function()
 {
     var bookmarks = $('#bookmarks');
     for (var i in unmark.bookmarks.list) {
-        bookmarks.append('<input type="checkbox" id="import-' + i + '" name="bookmark-' + i + '">&nbsp;&nbsp;<label for="import-' + i + '">' + unmark.bookmarks.list[i].title + '</label><br>');
+        bookmarks.append('<div><input type="checkbox" id="import-' + i + '" name="bookmark-' + i + '">&nbsp;&nbsp;<label for="import-' + i + '">' + unmark.bookmarks.list[i].title + '</label></div>');
     }
 };
 
@@ -103,6 +133,11 @@ unmark.bookmarks.update = function()
     unmark.bookmarks.save();
 };
 
+unmark.bookmarks.updateTotal = function()
+{
+    $('#total-bookmarks').html(unmark.bookmarks.total);
+};
+
 unmark.bookmarks.writeMessage = function(msg)
 {
     $('#message').html(msg).fadeIn('fast');
@@ -110,8 +145,14 @@ unmark.bookmarks.writeMessage = function(msg)
 
 chrome.bookmarks.getTree(function(bookmarks)
 {
-  unmark.bookmarks.get(bookmarks);
-  unmark.bookmarks.set();
+    unmark.storage_type = 'local';
+    unmark.storageGet('synced_marks', function(obj)
+    {
+        unmark.bookmarks.synced = (obj.synced_marks instanceof Array) ? obj.synced_marks : [];
+        unmark.bookmarks.get(bookmarks);
+        unmark.bookmarks.set();
+        unmark.storage_type     = 'sync';
+    });
 });
 
 /*chrome.bookmarks.onCreated.addListener(function(id, bookmark)
