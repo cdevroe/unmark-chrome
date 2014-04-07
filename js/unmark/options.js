@@ -158,6 +158,7 @@ chrome.bookmarks.getTree(function(bookmarks)
 $(document).ready(function()
 {
     // Figure to check the autosave option or not on load
+    unmark.storage_type = 'sync';
     unmark.storageGet('autosave', function(obj)
     {
         if (obj.autosave === true) {
@@ -189,7 +190,8 @@ $(document).ready(function()
     // Autosave option toggle
     $('#auto-save-bookmarks').click(function()
     {
-        var checked = $(this).is(':checked');
+        unmark.storage_type  = 'sync';
+        var checked          = $(this).is(':checked');
         unmark.storageSet({'autosave': checked});
     });
 });

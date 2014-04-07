@@ -1,8 +1,9 @@
 chrome.bookmarks.onCreated.addListener(function(id, bookmark)
 {
+    unmark.storage_type = 'sync';
     unmark.storageGet('autosave', function(setting)
     {
-        if (setting.autosave === true) {
+        if (setting.autosave === true && bookmark.url !== undefined && bookmark.url.indexOf('http') == 0) {
             var query = 'url=' + unmark.urlEncode(bookmark.url) + '&title=' + unmark.urlEncode(bookmark.title) + '&notes=' + unmark.urlEncode('#chrome #autosave');
             unmark.ajax(unmark.paths.add, query, 'POST',
                 function(obj)
