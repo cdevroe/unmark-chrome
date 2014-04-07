@@ -62,10 +62,10 @@ unmark.bookmarks.get = function(bookmarks)
             unmark.bookmarks.get(bookmark.children);
         }
         else if (bookmark.url !== undefined && bookmark.url.indexOf('http') == 0) {
+            found = false;
             for (var i = 0; i <= unmark.bookmarks.synced.length; i++) {
                 if (unmark.bookmarks.synced[i] == bookmark.id) {
                     found = true;
-                    break;
                 }
             }
 
@@ -154,11 +154,6 @@ chrome.bookmarks.getTree(function(bookmarks)
         unmark.storage_type     = 'sync';
     });
 });
-
-/*chrome.bookmarks.onCreated.addListener(function(id, bookmark)
-{
-
-});*/
 
 $(document).ready(function()
 {

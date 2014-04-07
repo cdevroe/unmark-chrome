@@ -29,7 +29,8 @@
       "js/third_party/jquery.js",
       "js/unmark/base.js",
       "js/unmark/omnibox.js",
-      "js/unmark/contexts.js"
+      "js/unmark/contexts.js",
+      "js/unmark/bookmarks.js"
     ]
   },
 
