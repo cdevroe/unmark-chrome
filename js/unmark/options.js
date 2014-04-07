@@ -162,22 +162,39 @@ chrome.bookmarks.getTree(function(bookmarks)
 
 $(document).ready(function()
 {
+    // Figure to check the autosave option or not on load
+    unmark.storageGet('autosave', function(obj)
+    {
+        if (obj.autosave === true) {
+            $('#auto-save-bookmarks').prop('checked', true);
+        }
+    });
 
+    // Select all marks
     $('#select').click(function(e)
     {
         e.preventDefault();
         $('input[id^="import-"]').prop('checked', true);
     });
 
+    // Deselect all marks
     $('#deselect').click(function(e)
     {
         e.preventDefault();
         $('input[id^="import-"]').prop('checked', false);
     });
 
+    // Digest marks
     $('#digest').click(function(e)
     {
         e.preventDefault();
         unmark.ajax(unmark.paths.ping, '', 'GET', unmark.bookmarks.digest, unmark.bookmarks.fail);
+    });
+
+    // Autosave option toggle
+    $('#auto-save-bookmarks').click(function()
+    {
+        var checked = $(this).is(':checked');
+        unmark.storageSet({'autosave': checked});
     });
 });
