@@ -1,9 +1,9 @@
-var unmark              = (unmark === undefined) ? {} : unmark;
-unmark.bookmarks        = {};
-unmark.bookmarks.list   = [];
-unmark.bookmarks.totals = {};
-unmark.bookmarks.timers = {};
-unmark.bookmarks.to_save = [];
+var unmark                 = (unmark === undefined) ? {} : unmark;
+unmark.bookmarks           = {};
+unmark.bookmarks.list      = [];
+unmark.bookmarks.totals    = {};
+unmark.bookmarks.timers    = {};
+unmark.bookmarks.to_save   = [];
 unmark.bookmarks.current_w = 0;
 unmark.bookmarks.synced    = [];
 unmark.bookmarks.total     = 0;
