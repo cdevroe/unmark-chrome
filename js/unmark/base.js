@@ -78,6 +78,46 @@ unmark.replaceSpecial = function(str)
     return str;
 };
 
+unmark.storageClear = function(callback)
+{
+    chrome.storage.sync.clear(function()
+    {
+        if ($.isFunction(callback)) {
+            callback();
+        }
+    });
+};
+
+unmark.storageGet = function(k, callback)
+{
+    chrome.storage.sync.get(k, function(items)
+    {
+        if ($.isFunction(callback)) {
+            callback(items);
+        }
+    });
+};
+
+unmark.storageRemove = function(k, callback)
+{
+    chrome.storage.sync.remove(k, function()
+    {
+        if ($.isFunction(callback)) {
+            callback(k);
+        }
+    });
+};
+
+unmark.storageSet = function(obj, callback)
+{
+    chrome.storage.sync.set(obj, function()
+    {
+        if ($.isFunction(callback)) {
+            callback(obj);
+        }
+    });
+};
+
 unmark.urlEncode = function(str)
 {
     return encodeURIComponent(unmark.replaceSpecial(str));
