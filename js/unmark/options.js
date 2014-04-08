@@ -92,8 +92,8 @@ unmark.bookmarks.save = function()
                 unmark.bookmarks.totals.success += 1;
                 unmark.bookmarks.synced.push(chrome_id);
                 unmark.storageSet({'synced_marks': unmark.bookmarks.synced});
-                $('input[id^="import-' + eyed + '"]').attr('disabled', true);
-                $('input[id^="import-' + eyed + '"]').parent().fadeOut('slow');
+                //$('input[id^="import-' + eyed + '"]').attr('disabled', true);
+                $('input[id^="import-' + eyed + '"]').parent().remove();
                 unmark.bookmarks.total -= 1;
                 unmark.bookmarks.updateTotal();
             }
