@@ -91,7 +91,6 @@ unmark.bookmarks.save = function()
             if (obj.mark) {
                 unmark.bookmarks.totals.success += 1;
                 unmark.bookmarks.synced.push(chrome_id);
-                unmark.storage_type = 'local';
                 unmark.storageSet({'synced_marks': unmark.bookmarks.synced});
                 $('input[id^="import-' + eyed + '"]').attr('disabled', true);
                 $('input[id^="import-' + eyed + '"]').parent().fadeOut('slow');
@@ -101,7 +100,6 @@ unmark.bookmarks.save = function()
             else {
                 unmark.bookmarks.totals.failed += 1;
             }
-            unmark.storage_type = 'sync';
             unmark.bookmarks.update();
         },
         function(obj)
@@ -145,20 +143,17 @@ unmark.bookmarks.writeMessage = function(msg)
 
 chrome.bookmarks.getTree(function(bookmarks)
 {
-    unmark.storage_type = 'local';
     unmark.storageGet('synced_marks', function(obj)
     {
         unmark.bookmarks.synced = (obj.synced_marks instanceof Array) ? obj.synced_marks : [];
         unmark.bookmarks.get(bookmarks);
         unmark.bookmarks.set();
-        unmark.storage_type     = 'sync';
     });
 });
 
 $(document).ready(function()
 {
     // Figure to check the autosave option or not on load
-    unmark.storage_type = 'sync';
     unmark.storageGet('autosave', function(obj)
     {
         if (obj.autosave === true) {
@@ -190,7 +185,6 @@ $(document).ready(function()
     // Autosave option toggle
     $('#auto-save-bookmarks').click(function()
     {
-        unmark.storage_type  = 'sync';
         var checked          = $(this).is(':checked');
         unmark.storageSet({'autosave': checked});
     });

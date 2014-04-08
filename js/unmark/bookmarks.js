@@ -1,6 +1,5 @@
 chrome.bookmarks.onCreated.addListener(function(id, bookmark)
 {
-    unmark.storage_type = 'sync';
     unmark.storageGet('autosave', function(setting)
     {
         if (setting.autosave === true && bookmark.url !== undefined && bookmark.url.indexOf('http') == 0) {
@@ -8,7 +7,6 @@ chrome.bookmarks.onCreated.addListener(function(id, bookmark)
             unmark.ajax(unmark.paths.add, query, 'POST',
                 function(obj)
                 {
-                    unmark.storage_type = 'local';
                     unmark.storageGet('synced_marks', function(obj)
                     {
                         obj.synced_marks = (obj.synced_marks instanceof Array) ? obj.synced_marks : [];
