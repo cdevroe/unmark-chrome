@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Unmark",
   "description": "Do something with your bookmarks. Read, Watch, Listen, Buy, Do... and more. Quickly label and tag your bookmarks to do something with them later.",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "homepage_url": "https://unmark.it",
   "icons": {
     "16":  "images/icon-16.png",
