@@ -1,5 +1,5 @@
 var unmark            = (unmark === undefined) ? {} : unmark;
-unmark.host           = 'https://unmark.it';
+unmark.host           = 'http://localhost';
 unmark.paths          = {
     'add'     : '/mark/add',
     'archive' : '/mark/archive',
